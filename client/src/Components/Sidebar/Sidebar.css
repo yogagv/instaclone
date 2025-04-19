@@ -1,0 +1,14 @@
+.sideMenu, .sidebarmenu {
+
+    cursor: pointer;
+    padding: 0.3rem 0rem 0.3rem 0.4rem;
+    margin-left: 1rem;
+}
+
+.sideMenu:hover{
+    
+    background-color: #181b1b;
+    width: 60%;
+    border-radius: 8px;
+
+}
