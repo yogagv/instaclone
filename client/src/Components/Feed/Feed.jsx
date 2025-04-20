@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Status from '../Status/Status'
 import Usefetch from '../Hooks/Usefetch'
 import { FaRegHeart } from "react-icons/fa6";
 import { FaRegComment } from "react-icons/fa6";
 import { PiShareFatBold } from "react-icons/pi";
-import { BASE_URL } from '../utils/Config'
+import { BASE_URL, token } from '../utils/Config'
+import axios from 'axios'
 import './feed.css'
+
+
 
 const Feed = ({forwardedRef}) => {
   const {
@@ -15,9 +18,42 @@ const Feed = ({forwardedRef}) => {
   }  = Usefetch(`${BASE_URL}/user/allUsers`)
 
 
+  const [localPostData, setLocalPostData] = useState(null);
+
+
+  const handleLike = async(postId) => {
+
+    try {
+
+      const res = await axios.post(`${BASE_URL}/post/likePost/${postId}`, {
+
+        headers : {
+
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      const updatedLikeCount = res.data.likeCount;
+
+      const updatedData = postData.map(user => ({
+        ...user,
+        posts: user.posts.map(post =>
+          post.id === postId ? { ...post, likes: updatedLikeCount } : post
+        )
+      }));
+
+      setLocalPostData(updatedData);
+
+    }catch(error) {
+      console.error("Error liking post:", error);
+    }
+
+  }
+
+
   console.log(postData);
   
-  const usersWithPosts = postData?.filter(data => data.posts && data.posts.length > 0) || [];
+  const usersWithPosts = (localPostData || postData)?.filter(data => data.posts && data.posts.length > 0) || [];
 
   console.log(usersWithPosts);
   
@@ -48,7 +84,9 @@ const Feed = ({forwardedRef}) => {
                         <img src={post.image} alt={post.caption || "Post"} className="post-image h-80 ml-35" />
                       )}
                       <div className="post-stats text-white ml-35 mt-5 flex gap-5">
-                      <FaRegHeart className='h-7 w-7'/> <FaRegComment className='h-7 w-7'/> <PiShareFatBold className='h-7 w-7'/>
+                      <FaRegHeart className='h-7 w-7 cursor-pointer' onClick={() => handleLike(post.id)}/> 
+                        <FaRegComment className='h-7 w-7'/> 
+                        <PiShareFatBold className='h-7 w-7'/>
                       </div>
                       <div className='text-white ml-35 mt-2'>{post.likes || "0"} likes</div>
                       {post.caption && (

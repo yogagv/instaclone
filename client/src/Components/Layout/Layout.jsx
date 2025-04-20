@@ -18,10 +18,14 @@ const Layout = () => {
     <>
     <div className='flex min-h-screen'>
     <div className='w-[20%] border-r-1' style={{border: '0.5px dotted #555555' }} ><Sidebar onNavigate={handleNavigation}/></div>
-    <div className='w-[50%] border-r-1' style={{border: '0.5px dotted #555555' }} >
+    <div className={`flex-grow transition-all ${activePage === 'profile' ? 'w-full' : 'w-[50%]'}`} style={{ border: '0.5px dotted #555555' }} >
     {activePage === 'feed' && <Feed />}
     {activePage === 'profile' && <Profile />}</div>
-    <div className='w-[30%]'><Suggestion /></div>
+    {activePage !== 'profile' && (
+        <div className="w-[30%]">
+          <Suggestion />
+        </div>
+      )}
     </div>
     </>
   )
