@@ -7,7 +7,7 @@ import { PiShareFatBold } from "react-icons/pi";
 import { BASE_URL } from '../utils/Config'
 import './feed.css'
 
-const Feed = () => {
+const Feed = ({forwardedRef}) => {
   const {
     data:postData,
     loading,
@@ -29,7 +29,7 @@ const Feed = () => {
     {loading && <p>Loading...</p>}
     {error && <p>Error</p>}
     {!loading && !error && (
-        <div className="feed-container">
+        <div ref={forwardedRef} className="feed-container">
           {usersWithPosts.length === 0 ? (
             <p>No posts available.</p>
           ) : (

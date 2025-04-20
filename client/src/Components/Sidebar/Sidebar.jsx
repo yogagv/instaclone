@@ -13,20 +13,20 @@ import { BsThreads } from "react-icons/bs";
 import { IoMenuSharp } from "react-icons/io5";
 import './Sidebar.css'
 
-const Sidebar = () => {
+const Sidebar = ({ onNavigate }) => {
   return (
     <>
     <div className='flex flex-col fixed gap-3'>
         <img src={logotext} alt="" className='w-40 p-3'/>
 
-        <div className='text-white flex gap-2 text-lg sideMenu'> <AiFillHome className='mt-1'/> Home</div>
+        <div className='text-white flex gap-2 text-lg sideMenu' onClick={() => onNavigate('feed')}> <AiFillHome className='mt-1'/> Home</div>
         <div className='text-white flex gap-2 text-lg sideMenu'> <FaSearch className='mt-1'/> Search</div>
         <div className='text-white flex gap-2 text-lg sideMenu'> <MdExplore className='mt-1'/> Explore</div>
         <div className='text-white flex gap-2 text-lg sideMenu'> <PiFilmReelFill className='mt-1'/> Reels</div>
         <div className='text-white flex gap-2 text-lg sideMenu'> <LiaFacebookMessenger className='mt-1'/> Messages</div>
         <div className='text-white flex gap-2 text-lg sideMenu'> <IoMdHeart className='mt-1'/> Notifications</div>
         <div className='text-white flex gap-2 text-lg sideMenu'> <IoAddCircle className='mt-1'/> Create</div>
-        <div className='text-white flex gap-2 text-lg sideMenu'> <FaUserCircle className='mt-1'/> Profile</div>
+        <div className='text-white flex gap-2 text-lg sideMenu' onClick={() => onNavigate('profile')}> <FaUserCircle className='mt-1'/> Profile</div>
         </div>
 
         <div className='fixed flex flex-col bottom-8 gap-3'>
