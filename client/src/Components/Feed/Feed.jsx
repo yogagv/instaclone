@@ -5,7 +5,6 @@ import { FaRegHeart } from "react-icons/fa6";
 import { FaRegComment } from "react-icons/fa6";
 import { PiShareFatBold } from "react-icons/pi";
 import { BASE_URL, token } from '../utils/Config'
-import axios from 'axios'
 import './feed.css'
 
 
@@ -25,15 +24,16 @@ const Feed = ({forwardedRef}) => {
 
     try {
 
-      const res = await axios.post(`${BASE_URL}/post/likePost/${postId}`, {
-
+      const res = await fetch(`${BASE_URL}/post/likePost/${postId}`, {
+        method:'POST',
         headers : {
-
           Authorization: `Bearer ${token}`
         }
       })
 
-      const updatedLikeCount = res.data.likeCount;
+      const data = await res.json();
+
+      const updatedLikeCount = data.likeCount;
 
       const updatedData = postData.map(user => ({
         ...user,
@@ -88,7 +88,7 @@ const Feed = ({forwardedRef}) => {
                         <FaRegComment className='h-7 w-7'/> 
                         <PiShareFatBold className='h-7 w-7'/>
                       </div>
-                      <div className='text-white ml-35 mt-2'>{post.likes || "0"} likes</div>
+                      <div className='text-white ml-35 mt-2'>{post.likes !== undefined ? post.likes : "0"} likes</div>
                       {post.caption && (
                         <div className='flex gap-2 ml-36'>
                           <p className='text-white'>{user.name}</p>

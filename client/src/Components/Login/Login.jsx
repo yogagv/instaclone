@@ -89,7 +89,7 @@ const Login = () => {
                  alert(result.message);
 
                  setTimeout(()=>{
-                    navigate('/')
+                    navigate(`/`)
                  },1000)
 
             }catch(error) {

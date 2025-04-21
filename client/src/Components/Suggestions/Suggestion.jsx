@@ -1,14 +1,23 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Usefetch from '../Hooks/Usefetch'
 import { BASE_URL } from '../utils/Config'
+import { AuthContext } from '../Context/AuthContext'
+import { useParams } from 'react-router-dom'
 
 const Suggestion = () => {
+  
+  const { user } = useContext(AuthContext)
+
+  const { id } = useParams();
 
   const {
     data:userData,
     loading,
     error
-  }  = Usefetch(`${BASE_URL}/user/singleUser/6801f62e43acb6ba801df750`)
+  }  = Usefetch(`${BASE_URL}/user/singleUser/${id}`);
+
+  console.log(user);
+  
 
 
   const {
